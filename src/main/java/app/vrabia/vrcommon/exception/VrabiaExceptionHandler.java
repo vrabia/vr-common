@@ -1,12 +1,14 @@
 package app.vrabia.vrcommon.exception;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -14,12 +16,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.text.MessageFormat;
 import java.util.List;
 
+@ControllerAdvice
 @RequiredArgsConstructor
+@Slf4j
 public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
     private final MessageSource messageSource;
 
     @ExceptionHandler(value = {VrabiaException.class})
     protected ResponseEntity<Object> handleVrabiaException(VrabiaException ex, WebRequest request) {
+        log.info("Handling VrabiaException: {}", ex.getErrorCode());
         HttpStatus httpErrorCode;
         switch (ex.getErrorCode()) {
             case BAD_REQUEST:
@@ -31,6 +36,7 @@ public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
             case UNAUTHORIZED:
             case MISSING_AUTHORIZATION_HEADER:
             case TOKEN_EXPIRED:
+            case TOKEN_INVALID:
                 httpErrorCode = HttpStatus.UNAUTHORIZED;
                 break;
             default:
@@ -41,6 +47,7 @@ public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {Throwable.class})
     protected ResponseEntity<Object> handleThrowable(Exception ex, WebRequest request) {
+        log.info("Handling Throwable: {}", ex.getMessage());
         return handleExceptionInternal(ex, ErrorCodes.INTERNAL_SERVER_ERROR, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
@@ -54,6 +61,7 @@ public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
      */
     private ResponseEntity<Object> handleException(VrabiaException ex, HttpStatus httpStatus, WebRequest request) {
         ApiError apiError = new ApiError(extractErrorMessage(ex.getErrorCode(), ex.getErrorArgs()), ex.getErrorCode());
+        log.error("Handling ApiError: {}, {}", apiError.getCode(), apiError.getMessage());
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), httpStatus, request);
     }
 

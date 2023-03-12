@@ -1,0 +1,8 @@
+springdoc:
+  swagger-ui:
+    # Disables the swagger-ui default petstore url.
+    disable-swagger-default-url: true
+    # The path of Swagger-UI
+    path: /swagger-ui.html
+  # Enables fully qualified names.
+  use-fqn: true
