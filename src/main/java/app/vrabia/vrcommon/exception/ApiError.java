@@ -1,10 +1,12 @@
 package app.vrabia.vrcommon.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class ApiError {
     @Schema(name = "code", description = "The unique code of the error ", example = "ERR1001", required = true)
     private String code;
