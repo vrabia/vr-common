@@ -1,5 +1,6 @@
 package app.vrabia.vrcommon.service;
 
+import app.vrabia.vrcommon.models.Role;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -30,7 +31,7 @@ public class JWTServiceImpl implements JWTService {
     @Value("${jwt.config.refreshTokenExpirationTimeMilis:86400000}")
     private int refreshTokenExpirationTimeMilis;
 
-    public String createAccessToken(String username, List<String> roles) {
+    public String createAccessToken(String username, List<Role> roles) {
         return JWT
                 .create()
                 .withSubject(username)
