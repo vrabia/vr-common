@@ -17,6 +17,7 @@ public enum ErrorCodes {
     MISSING_AUTHORIZATION_HEADER("ERR_46", "Missing authorization header"),
     TOKEN_EXPIRED("ERR_47", "Token has expired"),
     TOKEN_INVALID("ERR_48", "Token is invalid"),
+    INVALID_CREDENTIALS("ERR_49", "Invalid credentials"),
 
     // Internal error
     INTERNAL_SERVER_ERROR("ERR_51", "Something unexpected happened");

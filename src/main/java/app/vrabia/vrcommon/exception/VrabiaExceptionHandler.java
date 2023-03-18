@@ -37,6 +37,7 @@ public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
             case MISSING_AUTHORIZATION_HEADER:
             case TOKEN_EXPIRED:
             case TOKEN_INVALID:
+            case INVALID_CREDENTIALS:
                 httpErrorCode = HttpStatus.UNAUTHORIZED;
                 break;
             default:
