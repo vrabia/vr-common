@@ -31,6 +31,7 @@ public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
             case INVALID_PARAMETERS:
             case MISSING_QUERY_PARAM:
             case REQUEST_METHOD_NOT_SUPPORTED:
+            case UNIQUE_EMAIL:
                 httpErrorCode = HttpStatus.BAD_REQUEST;
                 break;
             case UNAUTHORIZED:

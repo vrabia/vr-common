@@ -18,6 +18,7 @@ public enum ErrorCodes {
     TOKEN_EXPIRED("ERR_47", "Token has expired"),
     TOKEN_INVALID("ERR_48", "Token is invalid"),
     INVALID_CREDENTIALS("ERR_49", "Invalid credentials"),
+    UNIQUE_EMAIL("ERR_410", "Email already exists"),
 
     // Internal error
     INTERNAL_SERVER_ERROR("ERR_51", "Something unexpected happened");

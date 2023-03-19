@@ -3,11 +3,10 @@ package app.vrabia.vrcommon.config.security;
 import app.vrabia.vrcommon.models.security.PublicEndpoints;
 import app.vrabia.vrcommon.service.JWTService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
 
     private final JWTService jwtService;
@@ -38,6 +38,7 @@ public class SecurityConfig {
 
         publicEndpoints.getEndpoints().forEach(endpoint -> {
             try {
+                log.info("Adding public endpoint: {}", endpoint);
                 http.authorizeHttpRequests(requests -> requests.requestMatchers(endpoint).permitAll());
             } catch (Exception e) {
                 throw new RuntimeException(e);
