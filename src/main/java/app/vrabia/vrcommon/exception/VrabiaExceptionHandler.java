@@ -25,6 +25,7 @@ public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {VrabiaException.class})
     protected ResponseEntity<Object> handleVrabiaException(VrabiaException ex, WebRequest request) {
         log.info("Handling VrabiaException: {}", ex.getErrorCode());
+        ex.printStackTrace();
         HttpStatus httpErrorCode;
         switch (ex.getErrorCode()) {
             case BAD_REQUEST:
@@ -50,6 +51,7 @@ public class VrabiaExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {Throwable.class})
     protected ResponseEntity<Object> handleThrowable(Exception ex, WebRequest request) {
         log.info("Handling Throwable: {}", ex.getMessage());
+        ex.printStackTrace();
         return handleExceptionInternal(ex, ErrorCodes.INTERNAL_SERVER_ERROR, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
