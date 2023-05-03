@@ -42,6 +42,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
     private boolean shouldValidateAuthorizationHeader(HttpServletRequest request) {
+        if("OPTIONS".equals(request.getMethod())) {
+            return false;
+        }
         if (request.getServletPath().startsWith(SWAGGER_UI_BASE_PATH)) {
             return false;
         }

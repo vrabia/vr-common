@@ -27,7 +27,7 @@ public class SecurityBeans {
                         .allowedOrigins("http://localhost:12420", "http://localhost:4200")
                         .allowedMethods(GET.name(), POST.name(), PATCH.name(), PUT.name(), DELETE.name(), OPTIONS.name(), HEAD.name())
                         .allowCredentials(true)
-                        .exposedHeaders("Set-Cookie");
+                        .exposedHeaders("Set-Cookie", "token");
             }
         };
     }

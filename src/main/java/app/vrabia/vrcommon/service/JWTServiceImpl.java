@@ -24,7 +24,7 @@ public class JWTServiceImpl implements JWTService {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.accessTokenExpirationTimeMilis:3600000}")
+    @Value("${jwt.accessTokenExpirationTimeMilis:360000000}")
     private int accessTokenExpirationTimeMilis;
 
     @Value("${jwt.config.refreshTokenExpirationTimeMilis:86400000}")
