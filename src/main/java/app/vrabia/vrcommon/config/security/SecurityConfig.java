@@ -1,5 +1,6 @@
 package app.vrabia.vrcommon.config.security;
 
+import app.vrabia.vrcommon.models.security.FiltersToAdd;
 import app.vrabia.vrcommon.models.security.PublicEndpoints;
 import app.vrabia.vrcommon.service.JWTService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class SecurityConfig {
 
     private final JWTService jwtService;
     private final PublicEndpoints publicEndpoints;
+    private final FiltersToAdd filtersToAdd;
     private final FilterChainExceptionHandlerFilter filterChainExceptionHandlerFilter;
 
     @Bean
@@ -48,6 +50,16 @@ public class SecurityConfig {
 
         http.addFilterBefore(new AuthorizationFilter(jwtService, publicEndpoints), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(filterChainExceptionHandlerFilter, AuthorizationFilter.class);
+
+        filtersToAdd.getFilters().forEach(filter -> {
+            try {
+                log.info("Adding filter: {}", filter);
+                http.addFilterBefore(filter, AuthorizationFilter.class);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         return http.build();
     }
 

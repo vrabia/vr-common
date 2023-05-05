@@ -1,8 +1,11 @@
 package app.vrabia.vrcommon.config.security;
 
+import app.vrabia.vrcommon.models.security.FiltersToAdd;
+import app.vrabia.vrcommon.models.security.PublicEndpoints;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,6 +19,16 @@ public class SecurityBeans {
     @Bean
     public FilterChainExceptionHandlerFilter filterChainExceptionHandlerFilter(HandlerExceptionResolver handlerExceptionResolver) {
         return new FilterChainExceptionHandlerFilter(handlerExceptionResolver);
+    }
+
+    @Bean
+    FiltersToAdd vrCommonFiltersToAdd() {
+        return new FiltersToAdd();
+    }
+
+    @Bean
+    PublicEndpoints vrCommonPublicEndpoints() {
+        return new PublicEndpoints();
     }
 
     @Bean

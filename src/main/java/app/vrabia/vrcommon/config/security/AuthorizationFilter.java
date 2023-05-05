@@ -20,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Slf4j
@@ -55,6 +56,17 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             return false;
         }
 
+        List<String> filteredList = publicRestEndpoints.getEndpoints().stream()
+                .filter(str -> str.endsWith("/**"))
+                .toList();
+        List<String> matchingEndpoints = filteredList.stream().filter(endpoint -> {
+            String endpointStart = endpoint.substring(0, endpoint.lastIndexOf("/"));
+            return request.getServletPath().startsWith(endpointStart);
+        }).toList();
+
+        if (matchingEndpoints.size() > 0) {
+            return false;
+        }
         return !publicRestEndpoints.getEndpoints().contains(request.getServletPath());
     }
 

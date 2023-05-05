@@ -20,6 +20,10 @@ public enum ErrorCodes {
     INVALID_CREDENTIALS("ERR_49", "Invalid credentials"),
     UNIQUE_EMAIL("ERR_410", "Email already exists"),
 
+    // Media error
+    FILE_NOT_FOUND("ERR_411", "File not found"),
+
+
     // Internal error
     INTERNAL_SERVER_ERROR("ERR_51", "Something unexpected happened");
 
