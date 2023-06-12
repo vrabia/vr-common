@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class JWTServiceImpl implements JWTService {
     private static final String ROLES_CLAIM = "roles";
+    private static final String EMAIL_CLAIM = "email";
+    private static final String USER_ID_CLAIM = "userId";
 
     @Value("${jwt.issuer}")
     private String issuer;
@@ -30,7 +32,7 @@ public class JWTServiceImpl implements JWTService {
     @Value("${jwt.config.refreshTokenExpirationTimeMilis:86400000}")
     private int refreshTokenExpirationTimeMilis;
 
-    public String createAccessToken(String username, List<String> roles) {
+    public String createAccessToken(String username, String email, String userId, List<String> roles) {
         return JWT
                 .create()
                 .withSubject(username)
@@ -38,6 +40,8 @@ public class JWTServiceImpl implements JWTService {
                 .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpirationTimeMilis))
                 .withIssuer(issuer)
                 .withClaim(ROLES_CLAIM, roles)
+                .withClaim("email", email)
+                .withClaim("userId", userId)
                 .sign(getAlgorithm());
     }
 
